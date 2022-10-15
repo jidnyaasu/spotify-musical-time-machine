@@ -1,2 +1,2 @@
-# spotify-musical-time-machine
-Creates a Spotify playlist of top 100 songs on a given date in past
+# Spotify Musical Time Machine
+Creates a Spotify playlist of top 100 songs of the given date in past
