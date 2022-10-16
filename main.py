@@ -15,8 +15,10 @@ url = f"https://www.billboard.com/charts/hot-100/{date}/"
 
 response = requests.get(url=url)
 songs_page = response.text
-
 soup = BeautifulSoup(songs_page, "html.parser")
+
+
+# Scrape Billboard for top 100 songs for given date
 
 top_100_songs = soup.select(selector="li h3#title-of-a-story")
 
@@ -25,6 +27,9 @@ songs_list = [song.text.strip() for song in top_100_songs]
 with open(f"top_100_songs_{date}.txt", "w") as f:
     for sr, song in enumerate(songs_list):
         f.write(f"{sr + 1}. {song}\n")
+
+
+# Search Spotify for the songs and create a list of song UIDs
 
 sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
 tracks = []
@@ -36,6 +41,9 @@ for song in songs_list:
         tracks.append(track)
     except IndexError:
         print(f"{song} doesn't exist in Spotify. Skipped.")
+
+
+# Create a playlist and add songs to it
 
 scope = "playlist-modify-public"
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
